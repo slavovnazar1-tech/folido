@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE FOLIO — Старинный Журнал</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Georgia','Times New Roman',serif;
+  background:#f5efe6;color:#2c2018;line-height:1.7;
+  background-image:radial-gradient(circle at 30% 20%,rgba(200,180,155,.15) 0%,transparent 50%),
+                   radial-gradient(circle at 70% 80%,rgba(180,160,140,.1) 0%,transparent 50%);
+}
+a{text-decoration:none;color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:0 40px}
+
+.masthead{text-align:center;padding:40px 0 20px;border-bottom:3px double #8b7355;position:relative}
+.masthead::after{content:'✦';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);background:#f5efe6;padding:0 12px;color:#8b7355;font-size:14px}
+.masthead .volume{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#8b7355;font-family:'Inter',sans-serif}
+.masthead h1{font-size:clamp(36px,5vw,56px);font-weight:400;letter-spacing:6px;text-transform:uppercase;color:#2c2018;margin:6px 0 4px}
+.masthead .date{font-size:12px;color:#8b7355;letter-spacing:1px;font-style:italic}
+.masthead .tagline{font-size:10px;text-transform:uppercase;letter-spacing:4px;color:#8b7355;margin-top:4px;font-family:'Inter',sans-serif}
+
+.nav-bar{border-bottom:1px solid #d4c8b8;padding:14px 0;margin-bottom:32px}
+.nav-bar .nav{display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+.nav-bar .nav a{
+  padding:4px 28px;font-size:11px;text-transform:uppercase;letter-spacing:3px;
+  color:#6a5a4a;transition:.3s;border-right:1px solid #d4c8b8;font-family:'Inter',sans-serif
+}
+.nav-bar .nav a:last-child{border-right:none}
+.nav-bar .nav a:hover{color:#2c2018}
+@media(max-width:640px){.nav-bar .nav a{padding:4px 14px;font-size:10px;letter-spacing:1px}}
+
+.section{padding:36px 0;border-bottom:1px solid #d4c8b8}
+.section:last-of-type{border-bottom:3px double #8b7355}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.section-header .rule{flex:1;height:1px;background:#d4c8b8}
+.section-header h2{
+  font-size:13px;text-transform:uppercase;letter-spacing:4px;font-weight:400;
+  color:#8b7355;white-space:nowrap;font-family:'Inter',sans-serif
+}
+.section-header .ornament{color:#8b7355;font-size:10px}
+
+.featured{display:grid;grid-template-columns:3fr 2fr;gap:40px;margin-bottom:32px}
+.featured .main .img{height:380px;background:#dcd0c0;overflow:hidden;margin-bottom:16px;border:1px solid #d4c8b8}
+.featured .main .img img{width:100%;height:100%;object-fit:cover;display:block}
+.featured .main .rubric{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#8b7355;font-family:'Inter',sans-serif;margin-bottom:6px}
+.featured .main h2{font-size:clamp(20px,2.5vw,30px);font-weight:400;line-height:1.2;margin-bottom:8px}
+.featured .main .byline{font-size:12px;color:#8b7355;font-style:italic;margin-bottom:10px}
+.featured .main p{font-size:14px;color:#4a3a2a;line-height:1.8}
+.featured .side .item{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 0;border-bottom:1px solid #e5d8c8}
+.featured .side .item:first-child{padding-top:0}
+.featured .side .item .thumb{height:90px;background:#dcd0c0;overflow:hidden}
+.featured .side .item .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.featured .side .item h3{font-size:14px;font-weight:400;line-height:1.3;margin-bottom:4px}
+.featured .side .item .meta{font-size:11px;color:#8b7355;font-style:italic}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px 40px}
+.grid-2 .entry .img{height:180px;background:#dcd0c0;overflow:hidden;margin-bottom:14px;border:1px solid #e5d8c8}
+.grid-2 .entry .img img{width:100%;height:100%;object-fit:cover;display:block}
+.grid-2 .entry .rubric{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#8b7355;font-family:'Inter',sans-serif}
+.grid-2 .entry h3{font-size:17px;font-weight:400;margin:4px 0 6px;line-height:1.3}
+.grid-2 .entry p{font-size:13px;color:#5a4a3a;line-height:1.7}
+.grid-2 .entry .byline{font-size:11px;color:#8b7355;font-style:italic;margin-top:8px}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.grid-3 .card .img{height:140px;background:#dcd0c0;overflow:hidden;border:1px solid #e5d8c8}
+.grid-3 .card .img img{width:100%;height:100%;object-fit:cover;display:block}
+.grid-3 .card .rubric{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#8b7355;font-family:'Inter',sans-serif;margin-top:10px}
+.grid-3 .card h3{font-size:15px;font-weight:400;margin:4px 0 6px;line-height:1.3}
+.grid-3 .card p{font-size:12px;color:#5a4a3a;line-height:1.6}
+
+.quote-block{text-align:center;padding:36px 40px;margin:24px 0;border-top:1px solid #d4c8b8;border-bottom:1px solid #d4c8b8;font-style:italic}
+.quote-block .text{font-size:clamp(16px,2vw,22px);line-height:1.5;color:#4a3a2a}
+.quote-block .attr{font-size:12px;color:#8b7355;margin-top:12px}
+.quote-block .attr::before{content:'— '}
+
+.editorial{padding:36px 0;border-bottom:1px solid #d4c8b8;display:grid;grid-template-columns:2fr 1fr;gap:40px}
+.editorial .text p{font-size:14px;color:#4a3a2a;line-height:1.9;margin-bottom:12px}
+.editorial .text .sig{font-style:italic;font-size:14px;color:#8b7355;margin-top:16px}
+.editorial .portrait{width:180px;height:180px;border-radius:50%;overflow:hidden;border:2px solid #d4c8b8;margin:0 auto}
+.editorial .portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.editorial .portrait-cap{text-align:center;font-size:11px;color:#8b7355;margin-top:8px;font-style:italic}
+
+footer{text-align:center;padding:40px 20px;font-size:11px;color:#8b7355;letter-spacing:1px;font-family:'Inter',sans-serif}
+footer .ornament{font-size:18px;margin-bottom:12px;color:#8b7355;letter-spacing:8px}
+footer .colophon{font-size:10px;color:#a89888;margin-top:6px;font-style:italic}
+
+@media(max-width:768px){
+  .featured{grid-template-columns:1fr;gap:24px}
+  .featured .main .img{height:260px}
+  .grid-2,.editorial{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr;gap:20px}
+  .featured .side .item{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="volume">Volume CXII · No. 14</div>
+  <h1>The Folio</h1>
+  <div class="date">Tuesday, 7 July 2026 · Price Two Shillings</div>
+  <div class="tagline">A Weekly Journal of Culture, Design, Travel, Food & Ideas</div>
+</div>
+
+<div class="container">
+
+<div class="nav-bar">
+  <div class="nav">
+    <a href="#culture">Culture</a>
+    <a href="#design">Design</a>
+    <a href="#travel">Travel</a>
+    <a href="#food">Food</a>
+    <a href="#ideas">Ideas</a>
+  </div>
+</div>
+
+<div class="section" id="culture">
+  <div class="section-header"><span class="ornament">❧</span><span class="rule"></span><h2>Culture</h2><span class="rule"></span><span class="ornament">❧</span></div>
+  <div class="featured">
+    <div class="main">
+      <div class="img"><img src="https://picsum.photos/seed/culture-feat/800/500" alt="" loading="lazy"></div>
+      <div class="rubric">Essay</div>
+      <h2>The Quiet Triumph of the Ordinary</h2>
+      <div class="byline">By Helena Marchmont · 8 min read</div>
+      <p>In an age of relentless novelty, the most radical act may be to simply sit still and pay attention to what is already here — the familiar street, the well-worn book, the unchanging ritual of morning tea. A meditation on finding depth in the everyday.</p>
+    </div>
+    <div class="side">
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/culture-s1/300/200" alt="" loading="lazy"></div><div><h3>The Lost Art of Letter Writing</h3><div class="meta">Correspondence · 5 min</div></div></div>
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/culture-s2/300/200" alt="" loading="lazy"></div><div><h3>Why We Still Need Public Libraries</h3><div class="meta">Institutions · 6 min</div></div></div>
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/culture-s3/300/200" alt="" loading="lazy"></div><div><h3>The Return of the Village Hall</h3><div class="meta">Community · 4 min</div></div></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="entry"><div class="img"><img src="https://picsum.photos/seed/culture-a1/600/350" alt="" loading="lazy"></div><div class="rubric">Profile</div><h3>Elena Voss: The Curator Who Refuses to Rush</h3><p>Why the director of the Norwood Museum believes slow looking is a form of resistance.</p><div class="byline">By Thomas Grey</div></div>
+    <div class="entry"><div class="img"><img src="https://picsum.photos/seed/culture-a2/600/350" alt="" loading="lazy"></div><div class="rubric">Review</div><h3>A Season of Quiet Operas</h3><p>Three new productions that favor intimacy over spectacle — and why that matters.</p><div class="byline">By Marguerite Fontaine</div></div>
+  </div>
+</div>
+
+<div class="section" id="design">
+  <div class="section-header"><span class="ornament">❧</span><span class="rule"></span><h2>Design</h2><span class="rule"></span><span class="ornament">❧</span></div>
+  <div class="featured" style="grid-template-columns:2fr 3fr">
+    <div class="side">
+      <div class="item" style="grid-template-columns:1fr"><div class="thumb" style="height:110px"><img src="https://picsum.photos/seed/design-s1/300/200" alt="" loading="lazy"></div><h3>Brutalism's Gentle Grandchild</h3><div class="meta">Architecture · 7 min</div></div>
+      <div class="item" style="grid-template-columns:1fr"><div class="thumb" style="height:110px"><img src="https://picsum.photos/seed/design-s2/300/200" alt="" loading="lazy"></div><h3>The Return of Natural Pigments</h3><div class="meta">Materials · 5 min</div></div>
+    </div>
+    <div class="main">
+      <div class="img"><img src="https://picsum.photos/seed/design-feat/800/500" alt="" loading="lazy"></div>
+      <div class="rubric">Cover Story</div>
+      <h2>The Handmade Object in the Age of Machines</h2>
+      <div class="byline">By Arthur Penderel · 10 min read</div>
+      <p>Across Europe, a quiet resurgence of craft is underway — potters, weavers, and furniture makers who reject the logic of mass production in favor of the slow, imperfect, deeply satisfying work of the hand. A journey through the workshops keeping tradition alive.</p>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:28px">
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/design-c1/400/250" alt="" loading="lazy"></div><div class="rubric">Furniture</div><h3>The Chair That Took Five Years</h3><p>A Danish designer's obsessive quest for the perfect curve.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/design-c2/400/250" alt="" loading="lazy"></div><div class="rubric">Typography</div><h3>Reviving a 17th Century Typeface</h3><p>How a forgotten font was rediscovered in a monastery archive.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/design-c3/400/250" alt="" loading="lazy"></div><div class="rubric">Interiors</div><h3>The Wardrobe as Archive</h3><p>On the quiet beauty of built-in storage and rooms that breathe.</p></div>
+  </div>
+</div>
+
+<div class="section" id="travel">
+  <div class="section-header"><span class="ornament">❧</span><span class="rule"></span><h2>Travel</h2><span class="rule"></span><span class="ornament">❧</span></div>
+  <div class="grid-2">
+    <div class="entry"><div class="img"><img src="https://picsum.photos/seed/travel-a1/600/350" alt="" loading="lazy"></div><div class="rubric">Dispatch</div><h3>The Slow Train Through the Dolomites</h3><p>A three-day rail journey that demands nothing but looking out the window. The perfect antidote to modern travel.</p><div class="byline">By Marco Bellini</div></div>
+    <div class="entry"><div class="img"><img src="https://picsum.photos/seed/travel-a2/600/350" alt="" loading="lazy"></div><div class="rubric">Hideaway</div><h3>An Inn on the Coast of Cornwall</h3><p>Where the Atlantic pounds against cliffs and dinner is whatever the tide brought in that morning.</p><div class="byline">By Clara Wainwright</div></div>
+  </div>
+  <div class="quote-block">
+    <div class="text">"The real voyage of discovery consists not in seeking new landscapes, but in having new eyes."</div>
+    <div class="attr">Marcel Proust</div>
+  </div>
+  <div class="grid-3">
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/travel-c1/400/250" alt="" loading="lazy"></div><div class="rubric">Walk</div><h3>A Stroll Through the Luberon</h3><p>Lavender fields, stone villages, and the light that made painters of us all.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/travel-c2/400/250" alt="" loading="lazy"></div><div class="rubric">Guide</div><h3>The Bookshop Map of Edinburgh</h3><p>Eleven independent bookshops worth crossing the city for.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/travel-c3/400/250" alt="" loading="lazy"></div><div class="rubric">Reflection</div><h3>Why I Travel Without a Camera</h3><p>On the forgotten art of remembering with your eyes instead of your phone.</p></div>
+  </div>
+</div>
+
+<div class="section" id="food">
+  <div class="section-header"><span class="ornament">❧</span><span class="rule"></span><h2>Food</h2><span class="rule"></span><span class="ornament">❧</span></div>
+  <div class="featured">
+    <div class="main">
+      <div class="img"><img src="https://picsum.photos/seed/food-feat/800/500" alt="" loading="lazy"></div>
+      <div class="rubric">Kitchen</div>
+      <h2>The Case for Cooking the Same Thing Every Week</h2>
+      <div class="byline">By Ruth Pendleton · 7 min read</div>
+      <p>Repetition is not the enemy of pleasure. In learning one dish deeply — its rhythms, its variations, its quiet satisfactions — we may find more joy than in a hundred novelty recipes. A defence of the weekly staple.</p>
+    </div>
+    <div class="side">
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/food-s1/300/200" alt="" loading="lazy"></div><div><h3>The Last of the Summer Tomatoes</h3><div class="meta">Seasonal · 4 min</div></div></div>
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/food-s2/300/200" alt="" loading="lazy"></div><div><h3>A Proper British Scone</h3><div class="meta">Recipe · 3 min</div></div></div>
+      <div class="item"><div class="thumb"><img src="https://picsum.photos/seed/food-s3/300/200" alt="" loading="lazy"></div><div><h3>On the Preservation of Lemons</h3><div class="meta">Technique · 5 min</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="ideas">
+  <div class="section-header"><span class="ornament">❧</span><span class="rule"></span><h2>Ideas</h2><span class="rule"></span><span class="ornament">❧</span></div>
+  <div class="editorial">
+    <div class="text">
+      <p><strong style="font-size:18px;font-weight:400">T</strong>he editor's desk this week is cluttered with books. Not unusual, you might say — but books about the very act of reading: how we read, why we stop, what we lose when we skim. Alberto Manguel's <em>A History of Reading</em> sits open beside Maryanne Wolf's <em>Reader, Come Home</em>, and between them they suggest something troubling: that the way we read is changing our minds.</p>
+      <p>We scroll where we once lingered. We scan where we once savoured. The great fear is not that we will stop reading — we read more than ever — but that we will lose the capacity for deep, sustained attention. For the kind of reading that changes us, not merely informs us.</p>
+      <p>And yet. There are signs of a counter-movement. Book clubs are thriving. Bookshop membership is rising. The physical book is making a quiet comeback among the young. Perhaps we are not losing the thread after all — merely rediscovering it.</p>
+      <div class="sig">— Eleanor Ashworth, Editor</div>
+    </div>
+    <div style="text-align:center">
+      <div class="portrait"><img src="https://picsum.photos/seed/editor-portrait/200/200" alt="" loading="lazy"></div>
+      <div class="portrait-cap">Eleanor Ashworth<br>Editor since 2018</div>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:8px">
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/ideas-c1/400/250" alt="" loading="lazy"></div><div class="rubric">Philosophy</div><h3>In Praise of Boredom</h3><p>Why doing nothing may be the most productive thing we can do.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/ideas-c2/400/250" alt="" loading="lazy"></div><div class="rubric">Science</div><h3>The Quiet Brain</h3><p>What neurology tells us about the value of silence and solitude.</p></div>
+    <div class="card"><div class="img"><img src="https://picsum.photos/seed/ideas-c3/400/250" alt="" loading="lazy"></div><div class="rubric">Essay</div><h3>The Gift of a Long Walk</h3><p>On thinking with your feet and the ideas that only arrive when you're moving.</p></div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <div class="ornament">❧ &nbsp; ❧ &nbsp; ❧</div>
+  THE FOLIO · Printed in London · Established 1898
+  <div class="colophon">Set in Georgian type · Published every Tuesday</div>
+</footer>
+
+</body>
+</html>
